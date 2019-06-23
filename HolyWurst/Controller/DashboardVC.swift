@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DashboardVC.swift
 //  HolyWurst
 //
 //  Created by Martin Lasek on 23.06.19.
@@ -17,7 +17,6 @@ class DashboardVC: UIViewController {
   private var loadingView = LoadingView()
   
   private var imageView = UIImageView()
-  private let classificationLabel = UILabel()
   private let hotdogView = HotdogView()
   private let notHotdogView = NotHotdogView()
   
@@ -38,7 +37,6 @@ class DashboardVC: UIViewController {
     setupIntroView()
     setupImageView()
     setupLoadingView()
-    setupClassificationLabel()
     setupHotdogView()
     setupNotHotdogView()
     setupClassificationRequest()
@@ -81,22 +79,6 @@ class DashboardVC: UIViewController {
     NSLayoutConstraint.activate([top, leading, bottom, trailing])
     
     loadingView.layer.opacity = 0
-  }
-  
-  private func setupClassificationLabel() {
-    view.addSubview(classificationLabel)
-    
-    classificationLabel.translatesAutoresizingMaskIntoConstraints = false
-    let centerX = classificationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-    let centerY = classificationLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-    NSLayoutConstraint.activate([centerX, centerY])
-    
-    classificationLabel.text = "Evaluating..."
-    classificationLabel.textColor = .black
-    classificationLabel.font = .systemFont(ofSize: 40, weight: .heavy)
-    classificationLabel.sizeToFit()
-    
-    classificationLabel.isHidden = true
   }
   
   private func setupHotdogView() {
@@ -170,6 +152,26 @@ class DashboardVC: UIViewController {
     present(picker, animated: true)
   }
   
+  private func isHotdog() {
+    self.hotdogView.isHidden = false
+    self.notHotdogView.isHidden = true
+  }
+  
+  private func isNotHotdog() {
+    self.hotdogView.isHidden = true
+    self.notHotdogView.isHidden = false
+  }
+  
+  private func isLoading() {
+    hotdogView.isHidden = true
+    notHotdogView.isHidden = true
+    loadingView.layer.opacity = 1.0
+  }
+  
+  private func isNotLoading() {
+    self.loadingView.layer.opacity = 0
+  }
+  
   private func classify(image: UIImage) {
     let orientation = CGImagePropertyOrientation(image.imageOrientation)
     guard let ciImage = CIImage(image: image) else {
@@ -186,26 +188,15 @@ class DashboardVC: UIViewController {
   
   private func processClassifications(for request: VNRequest, error: Error?) {
     DispatchQueue.main.async {
-      guard let results = request.results else {
-        self.classificationLabel.text = "Unable to classify image.\n\(error!.localizedDescription)"
-        return
-      }
+      guard let results = request.results else { return }
       
       // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
       let classifications = results as! [VNClassificationObservation]
-      //self.classificationLabel.isHidden = false
-      
-      if classifications.isEmpty {
-        self.classificationLabel.text = "Nothing recognized."
-      } else {
+      if !classifications.isEmpty {
         let topClassifications = classifications[0]
         switch topClassifications.identifier {
-        case "hotdog":
-          self.hotdogView.isHidden = false
-          self.notHotdogView.isHidden = true
-        default:
-          self.hotdogView.isHidden = true
-          self.notHotdogView.isHidden = false
+        case "hotdog": self.isHotdog()
+        default: self.isNotHotdog()
         }
       }
     }
@@ -219,12 +210,10 @@ extension DashboardVC: UIImagePickerControllerDelegate, UINavigationControllerDe
     if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
       imageView.image = image
       
-      hotdogView.isHidden = true
-      notHotdogView.isHidden = true
-      loadingView.layer.opacity = 1.0
+      isLoading()
       
       Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
-        DispatchQueue.main.async { self.loadingView.layer.opacity = 0 }
+        DispatchQueue.main.async { self.isNotLoading() }
         self.classify(image: image)
       }
     }

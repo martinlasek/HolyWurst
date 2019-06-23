@@ -67,13 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				238A720522BFF08500FA6A74 /* AppDelegate.swift */,
-				238A720722BFF08500FA6A74 /* DashboardVC.swift */,
-				238A721C22BFFB8300FA6A74 /* HotdogClassifier.mlmodel */,
-				238A721E22C001E500FA6A74 /* HotdogView.swift */,
-				238A722022C005C600FA6A74 /* NotHotdogView.swift */,
-				238A722222C010E200FA6A74 /* IntroView.swift */,
-				238A722622C031F400FA6A74 /* LoadingView.swift */,
+				238A722822C0493900FA6A74 /* View */,
+				238A722922C0494800FA6A74 /* Controller */,
 				238A721922BFF0FE00FA6A74 /* Utils */,
+				238A721C22BFFB8300FA6A74 /* HotdogClassifier.mlmodel */,
 				238A720C22BFF08700FA6A74 /* Assets.xcassets */,
 				238A720E22BFF08700FA6A74 /* LaunchScreen.storyboard */,
 				238A721122BFF08700FA6A74 /* Info.plist */,
@@ -88,6 +85,25 @@
 				238A722422C0127800FA6A74 /* UIColor+NewRed.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		238A722822C0493900FA6A74 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				238A721E22C001E500FA6A74 /* HotdogView.swift */,
+				238A722022C005C600FA6A74 /* NotHotdogView.swift */,
+				238A722222C010E200FA6A74 /* IntroView.swift */,
+				238A722622C031F400FA6A74 /* LoadingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		238A722922C0494800FA6A74 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				238A720722BFF08500FA6A74 /* DashboardVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
