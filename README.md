@@ -3,3 +3,4 @@
 
 ### Motivation
 I simply wanted to finally dig into Machine Learning 😊
+![GIF showing how the app works.](screenshot.gif)
