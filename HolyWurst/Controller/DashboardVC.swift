@@ -10,11 +10,13 @@ import UIKit
 import CoreML
 import Vision
 
-class DashboardVC: UIViewController {
+final class DashboardVC: UIViewController {
   var safeArea: UILayoutGuide!
   
-  private var introView = IntroView()
-  private var loadingView = LoadingView()
+  private let modalView = ModalView()
+  
+  private let introView = IntroView()
+  private let loadingView = LoadingView()
   
   private var imageView = UIImageView()
   private let hotdogView = HotdogView()
@@ -22,17 +24,10 @@ class DashboardVC: UIViewController {
   
   private var classificationRequest: VNCoreMLRequest!
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
+  override func loadView() {
+    super.loadView()
     view.backgroundColor = .white
     safeArea = view.layoutMarginsGuide
-    
-    let swipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeHandler))
-    swipe.direction = .down
-    let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
-    view.addGestureRecognizer(swipe)
-    view.addGestureRecognizer(tap)
-    tap.require(toFail: swipe)
     
     setupIntroView()
     setupImageView()
@@ -40,9 +35,24 @@ class DashboardVC: UIViewController {
     setupHotdogView()
     setupNotHotdogView()
     setupClassificationRequest()
+    
+    setupModalView()
   }
   
   // MARK: - Setup View
+  
+  private func setupModalView() {
+    view.addSubview(modalView)
+
+    modalView.translatesAutoresizingMaskIntoConstraints = false
+    let top = modalView.topAnchor.constraint(equalTo: view.topAnchor)
+    let leading = modalView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+    let bottom = modalView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    let trailing = modalView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+    NSLayoutConstraint.activate([top, leading, bottom, trailing])
+    
+    modalView.delegate = self
+  }
   
   private func setupIntroView() {
     view.addSubview(introView)
@@ -119,7 +129,7 @@ class DashboardVC: UIViewController {
     } catch { fatalError("Failed to load Vision ML model: \(error)") }
   }
   
-  // MARK: - Private
+  // MARK: - Gestures
   
   var touchCount = 0
   @objc private func tapHandler(_ gestureRecognizer: UITapGestureRecognizer) {
@@ -135,6 +145,17 @@ class DashboardVC: UIViewController {
     if gestureRecognizer.direction == .down {
       reset()
     }
+  }
+  
+  // MARK: - Private
+  
+  private func setupGestureRecognizers() {
+    let swipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeHandler))
+    swipe.direction = .down
+    let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+    view.addGestureRecognizer(swipe)
+    view.addGestureRecognizer(tap)
+    tap.require(toFail: swipe)
   }
   
   private func reset() {
@@ -217,5 +238,18 @@ extension DashboardVC: UIImagePickerControllerDelegate, UINavigationControllerDe
         self.classify(image: image)
       }
     }
+  }
+}
+
+extension DashboardVC: ModalViewDelegate {
+  func okAction() {
+    UIView.transition(
+      with: self.view,
+      duration: 0.25,
+      options: [.transitionCrossDissolve],
+      animations: {self.modalView.removeFromSuperview()}
+    )
+    
+    setupGestureRecognizers()
   }
 }

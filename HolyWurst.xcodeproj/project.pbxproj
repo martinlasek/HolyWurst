@@ -18,6 +18,7 @@
 		238A722322C010E200FA6A74 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A722222C010E200FA6A74 /* IntroView.swift */; };
 		238A722522C0127800FA6A74 /* UIColor+NewRed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A722422C0127800FA6A74 /* UIColor+NewRed.swift */; };
 		238A722722C031F400FA6A74 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A722622C031F400FA6A74 /* LoadingView.swift */; };
+		23ABF8262310542C000F2D09 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23ABF8252310542C000F2D09 /* ModalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		238A722222C010E200FA6A74 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		238A722422C0127800FA6A74 /* UIColor+NewRed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+NewRed.swift"; sourceTree = "<group>"; };
 		238A722622C031F400FA6A74 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		23ABF8252310542C000F2D09 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				238A722022C005C600FA6A74 /* NotHotdogView.swift */,
 				238A722222C010E200FA6A74 /* IntroView.swift */,
 				238A722622C031F400FA6A74 /* LoadingView.swift */,
+				23ABF8252310542C000F2D09 /* ModalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				238A720822BFF08500FA6A74 /* DashboardVC.swift in Sources */,
 				238A721F22C001E500FA6A74 /* HotdogView.swift in Sources */,
 				238A721822BFF09500FA6A74 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
+				23ABF8262310542C000F2D09 /* ModalView.swift in Sources */,
 				238A722522C0127800FA6A74 /* UIColor+NewRed.swift in Sources */,
 				238A720622BFF08500FA6A74 /* AppDelegate.swift in Sources */,
 				238A721D22BFFB8300FA6A74 /* HotdogClassifier.mlmodel in Sources */,
@@ -325,6 +329,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JLJHFZ4FU8;
 				INFOPLIST_FILE = HolyWurst/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,7 +337,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlasek.HolyWurst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -343,6 +348,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JLJHFZ4FU8;
 				INFOPLIST_FILE = HolyWurst/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -350,7 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.martinlasek.HolyWurst;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
